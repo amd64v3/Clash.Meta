@@ -13,7 +13,6 @@ import (
 	"time"
 
 	"github.com/Dreamacro/clash/adapter"
-	"github.com/Dreamacro/clash/adapter/outboundgroup"
 	"github.com/Dreamacro/clash/adapter/provider"
 	"github.com/Dreamacro/clash/common/utils"
 	"github.com/Dreamacro/clash/component/auth"
@@ -663,13 +662,6 @@ func parseProxies(cfg *RawConfig) (proxies map[string]C.Proxy, providersMap map[
 	pd, _ := provider.NewCompatibleProvider(provider.ReservedName, ps, hc)
 	providersMap[provider.ReservedName] = pd
 
-	global := outboundgroup.NewSelector(
-		&outboundgroup.GroupCommonOption{
-			Name: "GLOBAL",
-		},
-		[]providerTypes.ProxyProvider{pd},
-	)
-	proxies["GLOBAL"] = adapter.NewProxy(global)
 	ProxiesList = proxiesList
 	GroupsList = groupsList
 	if ParsingProxiesCallback != nil {
